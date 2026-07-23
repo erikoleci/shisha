@@ -43,6 +43,11 @@ export const AdminPage: React.FC<AdminPageProps> = ({
 
   const [activeTab, setActiveTab] = useState<'manage' | 'add'>('manage');
   const [loading, setLoading] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [oldPasswordInput, setOldPasswordInput] = useState('');
+  const [newPasswordInput, setNewPasswordInput] = useState('');
+  const [confirmPasswordInput, setConfirmPasswordInput] = useState('');
+  const [changePasswordMsg, setChangePasswordMsg] = useState<{ type: 'error' | 'success'; text: string } | null>(null);
 
   // Form State (Price starts completely empty '')
   const [name, setName] = useState('');
@@ -56,7 +61,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (passwordInput.trim().toLowerCase() === 'admin') {
+    const storedPassword = localStorage.getItem('admin_password') || 'admin';
+    if (passwordInput.trim().toLowerCase() === storedPassword.toLowerCase()) {
       setIsAuthenticated(true);
       sessionStorage.setItem('admin_authenticated', 'true');
       setLoginError(false);
@@ -69,6 +75,34 @@ export const AdminPage: React.FC<AdminPageProps> = ({
   const handleLogout = () => {
     setIsAuthenticated(false);
     sessionStorage.removeItem('admin_authenticated');
+  };
+
+  const handleChangePassword = (e: React.FormEvent) => {
+    e.preventDefault();
+    const storedPassword = localStorage.getItem('admin_password') || 'admin';
+
+    if (oldPasswordInput.trim().toLowerCase() !== storedPassword.toLowerCase()) {
+      setChangePasswordMsg({ type: 'error', text: 'Fjalëkalimi aktual është gabim.' });
+      return;
+    }
+    if (newPasswordInput.trim().length < 4) {
+      setChangePasswordMsg({ type: 'error', text: 'Fjalëkalimi i ri duhet të ketë të paktën 4 shkronja/shifra.' });
+      return;
+    }
+    if (newPasswordInput.trim() !== confirmPasswordInput.trim()) {
+      setChangePasswordMsg({ type: 'error', text: 'Fjalëkalimet e reja nuk përputhen.' });
+      return;
+    }
+
+    localStorage.setItem('admin_password', newPasswordInput.trim());
+    setChangePasswordMsg({ type: 'success', text: 'Fjalëkalimi u ndryshua me sukses!' });
+    setOldPasswordInput('');
+    setNewPasswordInput('');
+    setConfirmPasswordInput('');
+    setTimeout(() => {
+      setShowChangePassword(false);
+      setChangePasswordMsg(null);
+    }, 1500);
   };
 
   // File Upload Handler for PC & Phone
@@ -255,6 +289,15 @@ export const AdminPage: React.FC<AdminPageProps> = ({
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Rifresko</span>
+            </button>
+
+            <button
+              onClick={() => setShowChangePassword(true)}
+              className="px-3.5 py-2 rounded-xl bg-slate-950 border border-red-500/30 hover:border-red-400 text-red-300 hover:text-red-200 font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+              title="Ndrysho fjalëkalimin e adminit"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              <span>Ndrysho Fjalëkalimin</span>
             </button>
 
             <button
@@ -505,6 +548,73 @@ export const AdminPage: React.FC<AdminPageProps> = ({
         </div>
 
       </div>
+
+      {/* Change Password Modal */}
+      {showChangePassword && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="bg-slate-900 rounded-2xl max-w-sm w-full p-6 shadow-2xl relative border border-red-500/30 text-white">
+            <h3 className="text-lg font-bold text-white font-serif mb-4 flex items-center gap-2">
+              <Lock className="w-4 h-4 text-red-400" />
+              Ndrysho Fjalëkalimin
+            </h3>
+
+            <form onSubmit={handleChangePassword} className="space-y-3">
+              <input
+                type="password"
+                placeholder="Fjalëkalimi aktual"
+                value={oldPasswordInput}
+                onChange={(e) => setOldPasswordInput(e.target.value)}
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-red-500"
+                required
+              />
+              <input
+                type="password"
+                placeholder="Fjalëkalimi i ri"
+                value={newPasswordInput}
+                onChange={(e) => setNewPasswordInput(e.target.value)}
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-red-500"
+                required
+              />
+              <input
+                type="password"
+                placeholder="Konfirmo fjalëkalimin e ri"
+                value={confirmPasswordInput}
+                onChange={(e) => setConfirmPasswordInput(e.target.value)}
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-red-500"
+                required
+              />
+
+              {changePasswordMsg && (
+                <p className={`text-xs font-semibold ${changePasswordMsg.type === 'error' ? 'text-rose-400' : 'text-emerald-400'}`}>
+                  {changePasswordMsg.text}
+                </p>
+              )}
+
+              <div className="flex gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowChangePassword(false);
+                    setChangePasswordMsg(null);
+                    setOldPasswordInput('');
+                    setNewPasswordInput('');
+                    setConfirmPasswordInput('');
+                  }}
+                  className="flex-1 py-2.5 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+                >
+                  Anulo
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 py-2.5 rounded-full bg-gradient-to-r from-red-400 to-red-600 hover:from-red-300 hover:to-red-500 text-slate-950 font-black text-xs uppercase tracking-wider transition-all cursor-pointer"
+                >
+                  Ruaj
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
     </div>
   );
