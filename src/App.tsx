@@ -56,21 +56,19 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-slate-950 text-white font-sans selection:bg-red-500 selection:text-slate-950 antialiased overflow-x-hidden">
 
-      {/* Fixed Watermark Logo Background */}
+      {/* Fixed Watermark Logo Background (negative z-index: always behind, never blocks clicks) */}
       <div
-        className="fixed inset-0 z-0 pointer-events-none bg-center bg-no-repeat opacity-[0.13]"
+        className="fixed inset-0 -z-10 pointer-events-none bg-center bg-no-repeat opacity-[0.18]"
         style={{ backgroundImage: `url(${mraLogo})`, backgroundSize: 'min(65vw, 850px)' }}
         aria-hidden="true"
       />
 
       {/* Fixed Navbar */}
-      <div className="relative z-10">
       <Navbar
         activeSection={activeSection}
         onNavigate={handleNavigate}
         isSupabaseConnected={isConfigured}
       />
-      </div>
 
       {/* Main Content View Switcher */}
       <main className="relative z-10 pt-16">
