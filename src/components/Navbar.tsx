@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MessageCircle, Instagram, Menu, X, Database, ShieldCheck, Sparkles } from 'lucide-react';
+import { MessageCircle, Instagram, Menu, X, Database, ShieldCheck } from 'lucide-react';
 import { WHATSAPP_CONFIG, getGeneralWhatsAppUrl } from '../config/whatsapp';
 
 interface NavbarProps {
@@ -64,10 +64,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="flex items-center gap-2">
               <span className="text-xl sm:text-2xl font-black tracking-[0.2em] font-serif uppercase text-white group-hover:text-amber-400 transition-colors">
                 SHISHA<span className="text-amber-500">STORE</span>
-              </span>
-              <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30 tracking-wider uppercase">
-                <Sparkles className="w-2.5 h-2.5 text-amber-400" />
-                EL-BADIA VIP
               </span>
             </div>
             <span className="block text-[9px] tracking-[0.3em] text-slate-400 uppercase font-semibold -mt-0.5">

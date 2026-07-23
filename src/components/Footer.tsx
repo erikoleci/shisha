@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flame, Instagram, MessageCircle, Mail, MapPin, Database } from 'lucide-react';
+import { Flame, Instagram, MessageCircle, Mail, MapPin } from 'lucide-react';
 import { WHATSAPP_CONFIG, getGeneralWhatsAppUrl } from '../config/whatsapp';
 import { CATEGORIES } from '../types';
 
@@ -132,17 +132,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAdminModal }) 
         {/* Bottom Bar */}
         <div className="mt-12 pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 font-light">
           <p>© {new Date().getFullYear()} Shisha Store Albania. Të gjitha të drejtat e rezervuara.</p>
-          
-          <div className="flex items-center gap-3">
-            <button
-              onClick={onOpenAdminModal}
-              id="admin-preview-trigger-btn"
-              className="text-xs text-amber-300 hover:text-amber-200 border border-amber-500/30 px-3.5 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 transition-all flex items-center gap-2 font-bold cursor-pointer shadow-md"
-            >
-              <Database className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Admin Panel & Supabase Database</span>
-            </button>
-          </div>
         </div>
 
       </div>

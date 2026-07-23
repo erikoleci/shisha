@@ -7,9 +7,7 @@ import {
   Upload, 
   ImageIcon, 
   CheckCircle2, 
-  AlertTriangle,
   RefreshCw,
-  Code,
   Lock,
   ShieldCheck,
   Eye,
@@ -17,7 +15,6 @@ import {
   LogOut,
   AlertCircle
 } from 'lucide-react';
-import { isSupabaseConfigured } from '../config/supabase';
 
 interface AdminPageProps {
   products: Product[];
@@ -44,9 +41,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({
   const [loginError, setLoginError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const [activeTab, setActiveTab] = useState<'manage' | 'add' | 'sql'>('manage');
+  const [activeTab, setActiveTab] = useState<'manage' | 'add'>('manage');
   const [loading, setLoading] = useState(false);
-  const [showSqlModal, setShowSqlModal] = useState(false);
 
   // Form State (Price starts completely empty '')
   const [name, setName] = useState('');
@@ -57,8 +53,6 @@ export const AdminPage: React.FC<AdminPageProps> = ({
   const [description, setDescription] = useState('');
   const [badge, setBadge] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
-
-  const isConnected = isSupabaseConfigured();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -234,47 +228,6 @@ export const AdminPage: React.FC<AdminPageProps> = ({
     );
   }
 
-  const sqlSetupScript = `-- 1. KRIJIMI I TABELËS PRODUCTS NË SUPABASE
-CREATE TABLE IF NOT EXISTS public.products (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  name TEXT NOT NULL,
-  category TEXT NOT NULL,
-  description TEXT,
-  price NUMERIC NOT NULL DEFAULT 0,
-  image_url TEXT,
-  available BOOLEAN DEFAULT true,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
-);
-
--- 2. ROW LEVEL SECURITY (RLS)
-ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
-
--- Lejo lexim publik të produkteve
-CREATE POLICY "Public Read Products" 
-ON public.products FOR SELECT 
-USING (true);
-
--- Lejo modifikim të plotë (Për produkte)
-CREATE POLICY "Admin Full Access Products" 
-ON public.products FOR ALL 
-USING (true);
-
--- 3. KRIJIMI I BUCKET-IT NE SUPABASE STORAGE
-INSERT INTO storage.buckets (id, name, public) 
-VALUES ('product-images', 'product-images', true)
-ON CONFLICT (id) DO NOTHING;
-
--- Lejo lexim publik në bucket product-images
-CREATE POLICY "Public Access Storage" 
-ON storage.objects FOR SELECT 
-USING (bucket_id = 'product-images');
-
--- Lejo ngarkim fotosh në storage
-CREATE POLICY "Public Upload Storage" 
-ON storage.objects FOR INSERT 
-WITH CHECK (bucket_id = 'product-images');
-`;
-
   return (
     <div className="py-12 bg-slate-950 min-h-screen text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -303,21 +256,6 @@ WITH CHECK (bucket_id = 'product-images');
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Rifresko</span>
             </button>
-
-            {isConnected ? (
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-xs font-bold shadow-md">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Supabase Connected</span>
-              </span>
-            ) : (
-              <button
-                onClick={() => setShowSqlModal(true)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-950/80 border border-amber-500/50 text-amber-300 text-xs font-bold hover:bg-slate-800 transition-colors cursor-pointer"
-              >
-                <AlertTriangle className="w-4 h-4 text-amber-400" />
-                <span>Lidh Supabase (Shiko SQL Script)</span>
-              </button>
-            )}
 
             <button
               onClick={handleLogout}
@@ -353,18 +291,6 @@ WITH CHECK (bucket_id = 'product-images');
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Shto Produkt me Foto</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('sql')}
-            className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider rounded-t-xl border-t border-x transition-colors flex items-center gap-1.5 cursor-pointer ${
-              activeTab === 'sql'
-                ? 'bg-slate-950 border-amber-500/40 text-amber-400 font-black'
-                : 'border-transparent text-slate-400 hover:text-white'
-            }`}
-          >
-            <Code className="w-3.5 h-3.5" />
-            <span>Supabase SQL Setup</span>
           </button>
         </div>
 
@@ -576,67 +502,9 @@ WITH CHECK (bucket_id = 'product-images');
             </form>
           )}
 
-          {/* TAB 3: SQL SETUP GUIDE */}
-          {activeTab === 'sql' && (
-            <div className="space-y-4">
-              <h3 className="text-base font-bold text-white font-serif">
-                Lidhja me Supabase real (Kopjo Këtë Script në SQL Editor të Supabase)
-              </h3>
-              <p className="text-xs text-slate-300 font-light leading-relaxed">
-                1. Hyni në projektin tuaj në <strong>supabase.com</strong><br />
-                2. Shkoni te <strong>SQL Editor</strong> dhe ngjisni script-in e mëposhtëm:<br />
-                3. Vendosni <code>VITE_SUPABASE_URL</code> dhe <code>VITE_SUPABASE_ANON_KEY</code> në <code>.env</code> file.
-              </p>
-
-              <div className="relative bg-slate-950 text-amber-300 p-4 rounded-xl text-xs font-mono overflow-x-auto border border-amber-500/30">
-                <pre>{sqlSetupScript}</pre>
-              </div>
-
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(sqlSetupScript);
-                  alert('Script-i SQL u kopjua në clipboard!');
-                }}
-                className="px-5 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs uppercase tracking-widest transition-all shadow-md cursor-pointer"
-              >
-                Kopjo SQL Script
-              </button>
-            </div>
-          )}
-
         </div>
 
       </div>
-
-      {/* SQL Setup Modal */}
-      {showSqlModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-          <div className="bg-slate-900 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative border border-amber-500/30 text-white">
-            <h3 className="text-lg font-bold text-white font-serif mb-2">
-              Konfigurimi i Supabase në Projekt
-            </h3>
-            <p className="text-xs text-slate-300 mb-4 font-light">
-              Për të lidhur projektin tuaj real të biznesit:
-            </p>
-            <div className="space-y-2 text-xs bg-slate-950 p-4 rounded-xl border border-amber-500/20 mb-4 font-mono">
-              <p className="font-bold text-amber-300">Në file-in .env vendosni:</p>
-              <p className="text-amber-400">VITE_SUPABASE_URL=https://your-project.supabase.co</p>
-              <p className="text-amber-400">VITE_SUPABASE_ANON_KEY=your-anon-key</p>
-            </div>
-            <p className="text-xs text-slate-400 mb-4 font-light">
-              Pasi t'i keni vendosur, tabelat dhe fotot do të sinkronizohen automatikisht direkt me Supabase Database & Storage bucket <code>product-images</code>.
-            </p>
-            <div className="flex justify-end">
-              <button
-                onClick={() => setShowSqlModal(false)}
-                className="px-5 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs uppercase tracking-wider cursor-pointer"
-              >
-                U Qartësova
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
     </div>
   );
