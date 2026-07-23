@@ -223,7 +223,7 @@ Ju lutem më konfirmoni disponueshmërinë dhe mënyrën e dërgesës!`;
                 <span>Porosit Tani në WhatsApp</span>
               </a>
               <p className="text-[11px] text-slate-400 text-center mt-2.5 font-light">
-                Porosi direkte në numrin: <span className="font-bold text-red-400 font-mono">0696234684</span>
+                Porosi direkte në numrin: <span className="font-bold text-red-400 font-mono">0674933622</span>
               </p>
             </div>
 

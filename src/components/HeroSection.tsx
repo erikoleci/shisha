@@ -57,7 +57,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onShopClick }) => {
             className="w-full sm:w-auto px-9 py-4 rounded-full bg-emerald-600/90 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-[0.15em] shadow-xl shadow-emerald-950/60 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3 border border-emerald-400/40 backdrop-blur-md"
           >
             <MessageCircle className="w-4 h-4 text-emerald-300" />
-            <span>WhatsApp: 0696234684</span>
+            <span>WhatsApp: 0674933622</span>
           </a>
         </div>
 

@@ -1,8 +1,8 @@
 export const WHATSAPP_CONFIG = {
-  phoneNumber: '+355 69 623 4684',
-  rawNumber: '355696234684',
-  displayNumber: '0696234684',
-  baseWaUrl: 'https://wa.me/355696234684',
+  phoneNumber: '+355 67 493 3622',
+  rawNumber: '355674933622',
+  displayNumber: '0674933622',
+  baseWaUrl: 'https://wa.me/355674933622',
   instagramUrl: 'https://www.instagram.com/mra_shisha?igsh=MTk3eWRqOG52Mzc5Ng==',
   instagramHandle: '@mra_shisha',
   email: 'contact@mrashisha.al',
