@@ -5,17 +5,17 @@ import { getGeneralWhatsAppUrl, WHATSAPP_CONFIG } from '../config/whatsapp';
 export const AboutSection: React.FC = () => {
   const reasons = [
     {
-      icon: <Gem className="w-6 h-6 text-amber-400" />,
+      icon: <Gem className="w-6 h-6 text-red-400" />,
       title: "Produkte 100% Origjinale",
       description: "Përzgjedhje ekskluzive El-Badia e shisheve më cilësore, argjilave profesionale, aromave të certifikuara dhe aksesorëve."
     },
     {
-      icon: <Award className="w-6 h-6 text-amber-400" />,
+      icon: <Award className="w-6 h-6 text-red-400" />,
       title: "Cilësi e Garantuar VIP",
       description: "Përdorim vetëm materiale elitare si çelik inox 304, kristal të punuar me dorë dhe alumin të anodizuar."
     },
     {
-      icon: <Zap className="w-6 h-6 text-amber-400" />,
+      icon: <Zap className="w-6 h-6 text-red-400" />,
       title: "Dërgesë e Shpejtë",
       description: "Dërgesa me postë brenda 24-48 orëve në të gjitha qytetet e Shqipërisë me paketim të sigurtë anti-goditje."
     },
@@ -27,20 +27,20 @@ export const AboutSection: React.FC = () => {
   ];
 
   return (
-    <section id="about" className="py-20 bg-slate-950 text-white border-t border-amber-500/20 relative overflow-hidden">
+    <section id="about" className="py-20 bg-slate-950 text-white border-t border-red-500/20 relative overflow-hidden">
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs font-black uppercase tracking-[0.25em] text-amber-400 block mb-2">
+          <span className="text-xs font-black uppercase tracking-[0.25em] text-red-400 block mb-2">
             RRETH SHISHA STORE ALBANIA
           </span>
           <h2 className="text-3xl sm:text-5xl font-black text-white font-serif tracking-tight mb-4">
             Pse Të Zgjidhni Dyqanin Tonë VIP?
           </h2>
           <p className="text-slate-300 text-sm sm:text-base font-light leading-relaxed">
-            Shisha Store është dyqani specialist online në Shqipëri për shitjen e shishave, aromave dhe aksesorëve cilësorë me porosi direkte në WhatsApp.
+            MRA Shisha është dyqani specialist online në Shqipëri për shitjen e shishave, aromave dhe aksesorëve cilësorë me porosi direkte në WhatsApp.
           </p>
         </div>
 
@@ -49,10 +49,10 @@ export const AboutSection: React.FC = () => {
           {reasons.map((item, idx) => (
             <div
               key={idx}
-              className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-2xl border border-amber-500/20 hover:border-amber-500/60 shadow-xl shadow-slate-950/50 hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 flex flex-col justify-between"
+              className="bg-slate-900/90 backdrop-blur-xl p-6 rounded-2xl border border-red-500/20 hover:border-red-500/60 shadow-xl shadow-slate-950/50 hover:shadow-2xl hover:shadow-red-500/10 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
-                <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mb-4">
+                <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center mb-4">
                   {item.icon}
                 </div>
                 <h3 className="text-lg font-bold text-white font-serif mb-2">
@@ -63,7 +63,7 @@ export const AboutSection: React.FC = () => {
                 </p>
               </div>
 
-              <div className="pt-4 mt-4 border-t border-amber-500/10 flex items-center gap-1.5 text-amber-400 text-xs font-bold uppercase tracking-wider">
+              <div className="pt-4 mt-4 border-t border-red-500/10 flex items-center gap-1.5 text-red-400 text-xs font-bold uppercase tracking-wider">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                 <span>Garantuar 100%</span>
               </div>
@@ -72,8 +72,8 @@ export const AboutSection: React.FC = () => {
         </div>
 
         {/* Banner Card */}
-        <div className="rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/30 p-8 sm:p-12 text-center shadow-2xl max-w-4xl mx-auto relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 blur-[80px] pointer-events-none" />
+        <div className="rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-red-500/30 p-8 sm:p-12 text-center shadow-2xl max-w-4xl mx-auto relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/5 blur-[80px] pointer-events-none" />
           <h3 className="text-2xl sm:text-3xl font-black text-white font-serif mb-3">
             Keni pyetje apo kërkoni këshillim për produktin e duhur?
           </h3>

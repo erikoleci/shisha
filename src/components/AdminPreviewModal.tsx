@@ -118,7 +118,7 @@ export const AdminPreviewModal: React.FC<AdminPreviewModalProps> = ({
         {/* Header */}
         <div className="p-5 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-slate-950 font-bold shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-red-500 flex items-center justify-center text-slate-950 font-bold shadow-sm">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
@@ -151,7 +151,7 @@ export const AdminPreviewModal: React.FC<AdminPreviewModalProps> = ({
             onClick={() => setActiveTab('manage')}
             className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-t-xl border-t border-x transition-colors ${
               activeTab === 'manage'
-                ? 'bg-white border-slate-200 text-amber-600 font-extrabold'
+                ? 'bg-white border-slate-200 text-red-600 font-extrabold'
                 : 'border-transparent text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -161,7 +161,7 @@ export const AdminPreviewModal: React.FC<AdminPreviewModalProps> = ({
             onClick={() => setActiveTab('add')}
             className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-t-xl border-t border-x transition-colors flex items-center gap-1.5 ${
               activeTab === 'add'
-                ? 'bg-white border-slate-200 text-amber-600 font-extrabold'
+                ? 'bg-white border-slate-200 text-red-600 font-extrabold'
                 : 'border-transparent text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -197,7 +197,7 @@ export const AdminPreviewModal: React.FC<AdminPreviewModalProps> = ({
                         }}
                       />
                       <div>
-                        <span className="text-[10px] font-bold uppercase text-amber-600 tracking-wider">
+                        <span className="text-[10px] font-bold uppercase text-red-600 tracking-wider">
                           {prod.category}
                         </span>
                         <h4 className="text-xs sm:text-sm font-bold text-slate-900 font-serif">{prod.name}</h4>
@@ -215,7 +215,7 @@ export const AdminPreviewModal: React.FC<AdminPreviewModalProps> = ({
                           onChange={(e) => handleUpdatePrice(prod.id, Number(e.target.value))}
                           className="w-14 bg-transparent text-xs font-bold text-slate-900 focus:outline-none"
                         />
-                        <span className="text-xs font-bold text-amber-600">€</span>
+                        <span className="text-xs font-bold text-red-600">€</span>
                       </div>
 
                       {/* Availability toggle */}
@@ -257,7 +257,7 @@ export const AdminPreviewModal: React.FC<AdminPreviewModalProps> = ({
                   placeholder="p.sh. El-Badia Gold Hookah 2026"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-amber-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-red-500"
                 />
               </div>
 
@@ -267,7 +267,7 @@ export const AdminPreviewModal: React.FC<AdminPreviewModalProps> = ({
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-amber-500 cursor-pointer"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-red-500 cursor-pointer"
                   >
                     {CATEGORIES.filter(c => c !== 'All').map(cat => (
                       <option key={cat} value={cat}>{cat}</option>
@@ -284,7 +284,7 @@ export const AdminPreviewModal: React.FC<AdminPreviewModalProps> = ({
                     placeholder="Shkruaj çmimin (p.sh. 120)"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-amber-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-red-500"
                   />
                 </div>
               </div>
@@ -292,7 +292,7 @@ export const AdminPreviewModal: React.FC<AdminPreviewModalProps> = ({
               {/* PHOTO UPLOADER OPTION */}
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
                 <label className="block text-xs font-bold uppercase text-slate-800 flex items-center gap-1.5">
-                  <ImageIcon className="w-4 h-4 text-amber-600" />
+                  <ImageIcon className="w-4 h-4 text-red-600" />
                   <span>Foto e Produktit (Ngarko nga Pajisja ose me Link)</span>
                 </label>
 
@@ -303,7 +303,7 @@ export const AdminPreviewModal: React.FC<AdminPreviewModalProps> = ({
                     type="file"
                     accept="image/*"
                     onChange={handleFileUpload}
-                    className="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-amber-500 file:text-slate-950 hover:file:bg-amber-600 cursor-pointer"
+                    className="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-red-500 file:text-slate-950 hover:file:bg-red-600 cursor-pointer"
                   />
                 </div>
 
@@ -318,7 +318,7 @@ export const AdminPreviewModal: React.FC<AdminPreviewModalProps> = ({
                       setImage(e.target.value);
                       setImagePreview(e.target.value);
                     }}
-                    className="w-full px-3.5 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-amber-500"
+                    className="w-full px-3.5 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-red-500"
                   />
                 </div>
 
@@ -344,7 +344,7 @@ export const AdminPreviewModal: React.FC<AdminPreviewModalProps> = ({
                   placeholder="p.sh. Bestseller, VIP Choice, I Ri"
                   value={badge}
                   onChange={(e) => setBadge(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-amber-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-red-500"
                 />
               </div>
 
@@ -356,14 +356,14 @@ export const AdminPreviewModal: React.FC<AdminPreviewModalProps> = ({
                   placeholder="Përshkruani detajet e produktit..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-amber-500 resize-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-red-500 resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-xl bg-red-500 hover:bg-red-600 text-slate-950 font-extrabold text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 <Upload className="w-4 h-4" />
                 <span>{loading ? 'Po ruhet në Supabase...' : 'Ruaj Produktin në Supabase Database'}</span>

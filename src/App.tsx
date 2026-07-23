@@ -11,6 +11,7 @@ import { Footer } from './components/Footer';
 import { ProductsPage } from './pages/Products';
 import { AdminPage } from './pages/Admin';
 import { ProductDetailsModal } from './components/ProductDetailsModal';
+import mraLogo from './assets/mra-logo.jpeg';
 
 export default function App() {
   // Use products hook for Supabase integration
@@ -53,17 +54,26 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans selection:bg-amber-500 selection:text-slate-950 antialiased overflow-x-hidden">
-      
+    <div className="relative min-h-screen bg-slate-950 text-white font-sans selection:bg-red-500 selection:text-slate-950 antialiased overflow-x-hidden">
+
+      {/* Fixed Watermark Logo Background */}
+      <div
+        className="fixed inset-0 z-0 pointer-events-none bg-center bg-no-repeat opacity-[0.07]"
+        style={{ backgroundImage: `url(${mraLogo})`, backgroundSize: 'min(65vw, 850px)' }}
+        aria-hidden="true"
+      />
+
       {/* Fixed Navbar */}
+      <div className="relative z-10">
       <Navbar
         activeSection={activeSection}
         onNavigate={handleNavigate}
         isSupabaseConnected={isConfigured}
       />
+      </div>
 
       {/* Main Content View Switcher */}
-      <main className="pt-16">
+      <main className="relative z-10 pt-16">
         {activeSection === 'admin' ? (
           <AdminPage
             products={products}

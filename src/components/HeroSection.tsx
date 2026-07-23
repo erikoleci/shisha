@@ -18,17 +18,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onShopClick }) => {
       <div className="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
         
         {/* VIP Premium Boutique Badge */}
-        <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-slate-900/90 border border-amber-500/40 shadow-xl shadow-amber-500/10 mb-8 backdrop-blur-xl animate-fadeIn">
-          <Award className="w-4 h-4 text-amber-400" />
-          <span className="text-xs font-black tracking-[0.25em] text-amber-300 uppercase">
-            EL-BADIA ALBANIA
+        <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-slate-900/90 border border-red-500/40 shadow-xl shadow-red-500/10 mb-8 backdrop-blur-xl animate-fadeIn">
+          <Award className="w-4 h-4 text-red-400" />
+          <span className="text-xs font-black tracking-[0.25em] text-red-300 uppercase">
+            MRA SHISHA ALBANIA
           </span>
         </div>
 
         {/* Main Title - Dark Luxury Typography */}
         <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight font-serif text-white max-w-5xl leading-[1.02] mb-6 drop-shadow-2xl">
           LUXURY <br />
-          <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-transparent italic font-serif">
+          <span className="bg-gradient-to-r from-red-200 via-red-400 to-red-600 bg-clip-text text-transparent italic font-serif">
             HOOKAH EXPERIENCE
           </span>
         </h1>
@@ -43,14 +43,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onShopClick }) => {
           <button
             onClick={onShopClick}
             id="hero-shop-products-btn"
-            className="w-full sm:w-auto px-9 py-4 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-amber-500/25 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer border border-amber-300/50"
+            className="w-full sm:w-auto px-9 py-4 rounded-full bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:from-red-300 hover:to-red-500 text-slate-950 font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-red-500/25 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer border border-red-300/50"
           >
             <ShoppingBag className="w-4 h-4 text-slate-950" />
             <span>Shfeto Katalogun</span>
           </button>
 
           <a
-            href={getGeneralWhatsAppUrl('Përshëndetje! Dëshiroj të pyes për produktet në Shisha Store.')}
+            href={getGeneralWhatsAppUrl('Përshëndetje! Dëshiroj të pyes për produktet në MRA Shisha.')}
             target="_blank"
             rel="noopener noreferrer"
             id="hero-whatsapp-order-btn"

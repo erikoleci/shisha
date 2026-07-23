@@ -53,7 +53,7 @@ export const SmokeBackground: React.FC<SmokeBackgroundProps> = ({ className = ''
         maxAlpha: Math.random() * 0.15 + 0.05,
         life: 0,
         maxLife: Math.random() * 400 + 300,
-        color: Math.random() > 0.3 ? '212, 175, 55' : '255, 255, 255' // Gold & White wisps
+        color: Math.random() > 0.3 ? '180, 30, 40' : '255, 255, 255' // Red & White wisps
       };
     };
 
@@ -126,7 +126,7 @@ export const SmokeBackground: React.FC<SmokeBackgroundProps> = ({ className = ''
 
       {/* Ambient Dark Gold Vignette Overlays */}
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/90" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-slate-950/80" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-500/10 via-transparent to-slate-950/80" />
     </div>
   );
 };

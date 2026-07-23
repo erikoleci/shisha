@@ -164,8 +164,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({
   if (!isAuthenticated) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center px-4 py-16 bg-slate-950">
-        <div className="w-full max-w-md bg-slate-900 border border-amber-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl text-center text-white backdrop-blur-xl">
-          <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto mb-4">
+        <div className="w-full max-w-md bg-slate-900 border border-red-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl text-center text-white backdrop-blur-xl">
+          <div className="w-14 h-14 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center mx-auto mb-4">
             <ShieldCheck className="w-8 h-8" />
           </div>
 
@@ -178,7 +178,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({
 
           <form onSubmit={handleLogin} className="space-y-4 text-left">
             <div>
-              <label className="block text-xs font-bold uppercase text-amber-300 mb-1.5 tracking-wider">
+              <label className="block text-xs font-bold uppercase text-red-300 mb-1.5 tracking-wider">
                 Fjalëkalimi
               </label>
               <div className="relative">
@@ -192,13 +192,13 @@ export const AdminPage: React.FC<AdminPageProps> = ({
                     setLoginError(false);
                   }}
                   className={`w-full px-4 py-3 rounded-xl bg-slate-950 border text-white text-sm focus:outline-none pr-10 transition-colors ${
-                    loginError ? 'border-rose-500 focus:border-rose-500 bg-rose-950/20' : 'border-amber-500/30 focus:border-amber-400'
+                    loginError ? 'border-rose-500 focus:border-rose-500 bg-rose-950/20' : 'border-red-500/30 focus:border-red-400'
                   }`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-amber-400 p-1"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-red-400 p-1"
                   title={showPassword ? "Fshih fjalëkalimin" : "Trego fjalëkalimin"}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -213,15 +213,15 @@ export const AdminPage: React.FC<AdminPageProps> = ({
 
             <button
               type="submit"
-              className="w-full py-3.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black text-xs uppercase tracking-widest shadow-xl shadow-amber-500/20 transition-all cursor-pointer flex items-center justify-center gap-2"
+              className="w-full py-3.5 rounded-full bg-gradient-to-r from-red-400 to-red-600 hover:from-red-300 hover:to-red-500 text-slate-950 font-black text-xs uppercase tracking-widest shadow-xl shadow-red-500/20 transition-all cursor-pointer flex items-center justify-center gap-2"
             >
               <Lock className="w-4 h-4" />
               <span>Hyr në Admin Dashboard</span>
             </button>
           </form>
 
-          <p className="text-[11px] text-slate-400 mt-6 pt-4 border-t border-amber-500/10 font-light">
-            Shisha Store Albania • Akses i mbrojtur
+          <p className="text-[11px] text-slate-400 mt-6 pt-4 border-t border-red-500/10 font-light">
+            MRA Shisha Albania • Akses i mbrojtur
           </p>
         </div>
       </div>
@@ -233,10 +233,10 @@ export const AdminPage: React.FC<AdminPageProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Page Header */}
-        <div className="bg-slate-900 rounded-2xl border border-amber-500/30 p-6 sm:p-8 shadow-2xl mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 backdrop-blur-xl">
+        <div className="bg-slate-900 rounded-2xl border border-red-500/30 p-6 sm:p-8 shadow-2xl mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 backdrop-blur-xl">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-black shadow-lg shadow-amber-500/20">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center text-slate-950 font-black shadow-lg shadow-red-500/20">
                 <Database className="w-5 h-5" />
               </div>
               <h1 className="text-2xl font-black text-white font-serif">
@@ -251,7 +251,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({
           <div className="flex items-center gap-3">
             <button
               onClick={onRefresh}
-              className="px-4 py-2 rounded-xl bg-slate-950 border border-amber-500/30 hover:border-amber-400 text-amber-300 hover:text-amber-200 font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-slate-950 border border-red-500/30 hover:border-red-400 text-red-300 hover:text-red-200 font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Rifresko</span>
@@ -269,12 +269,12 @@ export const AdminPage: React.FC<AdminPageProps> = ({
         </div>
 
         {/* Tab Selection */}
-        <div className="flex border-b border-amber-500/20 bg-slate-900 rounded-t-2xl px-6 pt-4 gap-2">
+        <div className="flex border-b border-red-500/20 bg-slate-900 rounded-t-2xl px-6 pt-4 gap-2">
           <button
             onClick={() => setActiveTab('manage')}
             className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider rounded-t-xl border-t border-x transition-colors cursor-pointer ${
               activeTab === 'manage'
-                ? 'bg-slate-950 border-amber-500/40 text-amber-400 font-black'
+                ? 'bg-slate-950 border-red-500/40 text-red-400 font-black'
                 : 'border-transparent text-slate-400 hover:text-white'
             }`}
           >
@@ -285,7 +285,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({
             onClick={() => setActiveTab('add')}
             className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider rounded-t-xl border-t border-x transition-colors flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'add'
-                ? 'bg-slate-950 border-amber-500/40 text-amber-400 font-black'
+                ? 'bg-slate-950 border-red-500/40 text-red-400 font-black'
                 : 'border-transparent text-slate-400 hover:text-white'
             }`}
           >
@@ -295,7 +295,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({
         </div>
 
         {/* Container Content */}
-        <div className="bg-slate-900 border-x border-b border-amber-500/30 rounded-b-2xl p-6 shadow-2xl">
+        <div className="bg-slate-900 border-x border-b border-red-500/30 rounded-b-2xl p-6 shadow-2xl">
           
           {/* TAB 1: MANAGE PRODUCTS */}
           {activeTab === 'manage' && (
@@ -308,20 +308,20 @@ export const AdminPage: React.FC<AdminPageProps> = ({
                 products.map((prod) => (
                   <div
                     key={prod.id}
-                    className="p-4 rounded-xl bg-slate-950 border border-amber-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg"
+                    className="p-4 rounded-xl bg-slate-950 border border-red-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg"
                   >
                     <div className="flex items-center gap-3.5 w-full sm:w-auto">
                       <img
                         src={prod.image_url}
                         alt={prod.name}
-                        className="w-14 h-14 rounded-xl object-cover bg-slate-900 shrink-0 border border-amber-500/30 shadow-md"
+                        className="w-14 h-14 rounded-xl object-cover bg-slate-900 shrink-0 border border-red-500/30 shadow-md"
                         referrerPolicy="no-referrer"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=800&auto=format&fit=crop";
                         }}
                       />
                       <div>
-                        <span className="text-[10px] font-black uppercase text-amber-400 tracking-wider">
+                        <span className="text-[10px] font-black uppercase text-red-400 tracking-wider">
                           {prod.category}
                         </span>
                         <h4 className="text-sm font-bold text-white font-serif">{prod.name}</h4>
@@ -329,17 +329,17 @@ export const AdminPage: React.FC<AdminPageProps> = ({
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3 w-full sm:w-auto justify-end border-t sm:border-t-0 pt-3 sm:pt-0 border-amber-500/10">
+                    <div className="flex items-center gap-3 w-full sm:w-auto justify-end border-t sm:border-t-0 pt-3 sm:pt-0 border-red-500/10">
                       {/* Price editor */}
-                      <div className="flex items-center gap-1 bg-slate-900 px-3 py-1.5 rounded-lg border border-amber-500/30 shadow-sm">
-                        <span className="text-[10px] text-amber-300 uppercase font-bold">Çmimi:</span>
+                      <div className="flex items-center gap-1 bg-slate-900 px-3 py-1.5 rounded-lg border border-red-500/30 shadow-sm">
+                        <span className="text-[10px] text-red-300 uppercase font-bold">Çmimi:</span>
                         <input
                           type="number"
                           value={prod.price}
                           onChange={(e) => handlePriceUpdate(prod.id, Number(e.target.value))}
                           className="w-16 bg-transparent text-xs font-bold text-white focus:outline-none"
                         />
-                        <span className="text-xs font-black text-amber-400">€</span>
+                        <span className="text-xs font-black text-red-400">€</span>
                       </div>
 
                       {/* Availability toggle */}
@@ -372,29 +372,29 @@ export const AdminPage: React.FC<AdminPageProps> = ({
           {/* TAB 2: ADD PRODUCT & UPLOAD PHOTO */}
           {activeTab === 'add' && (
             <form onSubmit={handleCreateSubmit} className="space-y-4 max-w-2xl mx-auto py-2">
-              <h3 className="text-lg font-bold text-white font-serif mb-4 pb-2 border-b border-amber-500/20">
+              <h3 className="text-lg font-bold text-white font-serif mb-4 pb-2 border-b border-red-500/20">
                 Shto Produkt të Ri në Supabase
               </h3>
 
               <div>
-                <label className="block text-xs font-bold uppercase text-amber-300 mb-1 tracking-wider">Emri i Produktit *</label>
+                <label className="block text-xs font-bold uppercase text-red-300 mb-1 tracking-wider">Emri i Produktit *</label>
                 <input
                   type="text"
                   required
                   placeholder="p.sh. El-Badia C7 Premium Hookah"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-amber-500/30 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-amber-400"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-red-500/30 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-red-400"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold uppercase text-amber-300 mb-1 tracking-wider">Kategoria *</label>
+                  <label className="block text-xs font-bold uppercase text-red-300 mb-1 tracking-wider">Kategoria *</label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-amber-500/30 text-white text-xs sm:text-sm focus:outline-none focus:border-amber-400 cursor-pointer"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-red-500/30 text-white text-xs sm:text-sm focus:outline-none focus:border-red-400 cursor-pointer"
                   >
                     {CATEGORIES.filter(c => c !== 'All').map(cat => (
                       <option key={cat} value={cat}>{cat}</option>
@@ -403,7 +403,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase text-amber-300 mb-1 tracking-wider">Çmimi (€) *</label>
+                  <label className="block text-xs font-bold uppercase text-red-300 mb-1 tracking-wider">Çmimi (€) *</label>
                   <input
                     type="number"
                     required
@@ -411,15 +411,15 @@ export const AdminPage: React.FC<AdminPageProps> = ({
                     placeholder="Shkruaj çmimin (p.sh. 120)"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-amber-500/30 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-amber-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-red-500/30 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-red-400"
                   />
                 </div>
               </div>
 
               {/* PHOTO UPLOADER OPTION */}
-              <div className="p-4 rounded-xl bg-slate-950 border border-amber-500/30 space-y-3">
-                <label className="block text-xs font-bold uppercase text-amber-400 flex items-center gap-1.5 tracking-wider">
-                  <ImageIcon className="w-4 h-4 text-amber-400" />
+              <div className="p-4 rounded-xl bg-slate-950 border border-red-500/30 space-y-3">
+                <label className="block text-xs font-bold uppercase text-red-400 flex items-center gap-1.5 tracking-wider">
+                  <ImageIcon className="w-4 h-4 text-red-400" />
                   <span>Foto e Produktit</span>
                 </label>
 
@@ -432,7 +432,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({
                     type="file"
                     accept="image/*"
                     onChange={handleFileChange}
-                    className="w-full text-xs text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-black file:bg-amber-400 file:text-slate-950 hover:file:bg-amber-300 cursor-pointer"
+                    className="w-full text-xs text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-black file:bg-red-400 file:text-slate-950 hover:file:bg-red-300 cursor-pointer"
                   />
                 </div>
 
@@ -449,7 +449,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({
                       setImageUrl(e.target.value);
                       setImagePreview(e.target.value);
                     }}
-                    className="w-full px-3.5 py-2 rounded-lg bg-slate-900 border border-amber-500/20 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-amber-400"
+                    className="w-full px-3.5 py-2 rounded-lg bg-slate-900 border border-red-500/20 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-red-400"
                   />
                 </div>
 
@@ -459,7 +459,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({
                     <img
                       src={imagePreview}
                       alt="Preview"
-                      className="w-16 h-16 rounded-lg object-cover border border-amber-500/30 shadow-md"
+                      className="w-16 h-16 rounded-lg object-cover border border-red-500/30 shadow-md"
                     />
                     <span className="text-xs text-emerald-400 font-bold flex items-center gap-1">
                       <CheckCircle2 className="w-4 h-4" /> Fotoja u përzgjodh për ngarkim!
@@ -469,32 +469,32 @@ export const AdminPage: React.FC<AdminPageProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase text-amber-300 mb-1 tracking-wider">Etiketa (Badge - Opcionale)</label>
+                <label className="block text-xs font-bold uppercase text-red-300 mb-1 tracking-wider">Etiketa (Badge - Opcionale)</label>
                 <input
                   type="text"
                   placeholder="p.sh. Bestseller, El-Badia Original, I Ri"
                   value={badge}
                   onChange={(e) => setBadge(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-amber-500/30 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-amber-400"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-red-500/30 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-red-400"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase text-amber-300 mb-1 tracking-wider">Përshkrimi *</label>
+                <label className="block text-xs font-bold uppercase text-red-300 mb-1 tracking-wider">Përshkrimi *</label>
                 <textarea
                   rows={3}
                   required
                   placeholder="Përshkruani specifikat e shishës apo aksesorit..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-amber-500/30 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-amber-400 resize-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-red-500/30 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-red-400 resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black text-xs uppercase tracking-widest shadow-xl shadow-amber-500/20 transition-all cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-full bg-gradient-to-r from-red-400 to-red-600 hover:from-red-300 hover:to-red-500 text-slate-950 font-black text-xs uppercase tracking-widest shadow-xl shadow-red-500/20 transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 <Upload className="w-4 h-4" />
                 <span>{loading ? 'Po ruhet në Supabase...' : 'Ruaj Produktin në Supabase'}</span>

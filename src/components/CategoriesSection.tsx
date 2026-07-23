@@ -77,18 +77,18 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
   ];
 
   return (
-    <section id="categories" className="py-20 bg-slate-950 text-white border-y border-amber-500/20 relative overflow-hidden">
+    <section id="categories" className="py-20 bg-slate-950 text-white border-y border-red-500/20 relative overflow-hidden">
       
       {/* Decorative background glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-amber-500/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-red-500/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-amber-500/30 shadow-md mb-4 backdrop-blur-md">
-            <Layers className="w-3.5 h-3.5 text-amber-400" />
-            <span className="text-xs font-black uppercase tracking-[0.2em] text-amber-300">Kategoritë VIP</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-red-500/30 shadow-md mb-4 backdrop-blur-md">
+            <Layers className="w-3.5 h-3.5 text-red-400" />
+            <span className="text-xs font-black uppercase tracking-[0.2em] text-red-300">Kategoritë VIP</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-white font-serif tracking-tight mb-4">
             Eksploro Koleksionet Tona Lux
@@ -104,7 +104,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
             <div
               key={cat.id}
               onClick={() => onSelectCategory(cat.id)}
-              className="group relative h-80 rounded-2xl overflow-hidden bg-slate-900 border border-amber-500/20 hover:border-amber-500/70 hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-500 cursor-pointer flex flex-col justify-end p-6"
+              className="group relative h-80 rounded-2xl overflow-hidden bg-slate-900 border border-red-500/20 hover:border-red-500/70 hover:shadow-2xl hover:shadow-red-500/10 transition-all duration-500 cursor-pointer flex flex-col justify-end p-6"
             >
               {/* Image background */}
               <img
@@ -119,23 +119,23 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
 
               {/* Badge */}
               <div className="absolute top-4 left-4 z-10">
-                <span className="px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-widest bg-slate-950/90 text-amber-300 border border-amber-500/40 backdrop-blur-md shadow-lg">
+                <span className="px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-widest bg-slate-950/90 text-red-300 border border-red-500/40 backdrop-blur-md shadow-lg">
                   {cat.badge}
                 </span>
               </div>
 
               {/* Content */}
               <div className="relative z-10 text-white">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center mb-3 shadow-lg shadow-amber-500/20 text-slate-950">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center mb-3 shadow-lg shadow-red-500/20 text-slate-950">
                   {cat.icon}
                 </div>
-                <h3 className="text-2xl font-black font-serif text-white group-hover:text-amber-300 transition-colors mb-1">
+                <h3 className="text-2xl font-black font-serif text-white group-hover:text-red-300 transition-colors mb-1">
                   {cat.title}
                 </h3>
                 <p className="text-xs text-slate-300 font-light line-clamp-2 leading-relaxed mb-4">
                   {cat.description}
                 </p>
-                <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider text-amber-400 group-hover:translate-x-1 transition-transform">
+                <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider text-red-400 group-hover:translate-x-1 transition-transform">
                   <span>Shiko Produktet</span>
                   <span>→</span>
                 </span>

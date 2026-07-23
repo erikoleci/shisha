@@ -3,9 +3,9 @@ export const WHATSAPP_CONFIG = {
   rawNumber: '355696234684',
   displayNumber: '0696234684',
   baseWaUrl: 'https://wa.me/355696234684',
-  instagramUrl: 'https://instagram.com/shisha.store.al',
-  instagramHandle: '@shisha.store.al',
-  email: 'contact@shishastore.al',
+  instagramUrl: 'https://www.instagram.com/mra_shisha?igsh=MTk3eWRqOG52Mzc5Ng==',
+  instagramHandle: '@mra_shisha',
+  email: 'contact@mrashisha.al',
   address: 'Tiranë, Shqipëri (Dërgesa në të gjithë Shqipërinë)',
   workingHours: 'Porosi Online 24/7 në WhatsApp'
 };

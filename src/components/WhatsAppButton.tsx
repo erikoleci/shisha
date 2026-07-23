@@ -30,7 +30,7 @@ export const WhatsAppButton: React.FC = () => {
                 <span className="absolute bottom-0 right-0 w-2 h-2 bg-emerald-400 border border-white rounded-full" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-slate-900 font-serif">Shisha Store Support</h4>
+                <h4 className="text-xs font-bold text-slate-900 font-serif">MRA Shisha Support</h4>
                 <p className="text-[10px] text-emerald-600 font-semibold">Online: {WHATSAPP_CONFIG.displayNumber}</p>
               </div>
             </div>
@@ -52,7 +52,7 @@ export const WhatsAppButton: React.FC = () => {
               placeholder="Shkruaj pyetjen këtu..."
               value={quickMsg}
               onChange={(e) => setQuickMsg(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:border-amber-500"
+              className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:border-red-500"
             />
             <button
               type="submit"
@@ -76,7 +76,7 @@ export const WhatsAppButton: React.FC = () => {
           <MessageCircle className="w-7 h-7" />
           
           {/* Unread dot */}
-          <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-amber-500 border-2 border-white rounded-full" />
+          <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-red-500 border-2 border-white rounded-full" />
         </button>
       </div>
 

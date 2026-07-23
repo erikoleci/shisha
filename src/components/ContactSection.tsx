@@ -10,7 +10,7 @@ export const ContactSection: React.FC = () => {
     e.preventDefault();
     if (!customMsg.trim()) return;
 
-    const fullMessage = `Përshëndetje Shisha Store!
+    const fullMessage = `Përshëndetje MRA Shisha!
 Përshëndetje, unë jam: ${senderName || 'Klient'}
 
 Mesazhi im:
@@ -21,14 +21,14 @@ ${customMsg}`;
   };
 
   return (
-    <section id="contact" className="py-20 bg-slate-950 text-white border-t border-amber-500/20 relative overflow-hidden">
+    <section id="contact" className="py-20 bg-slate-950 text-white border-t border-red-500/20 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Title */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-amber-500/30 shadow-md mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span className="text-xs font-black uppercase tracking-[0.2em] text-amber-300">Na Kontaktoni</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-red-500/30 shadow-md mb-3">
+            <Sparkles className="w-3.5 h-3.5 text-red-400" />
+            <span className="text-xs font-black uppercase tracking-[0.2em] text-red-300">Na Kontaktoni</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-white font-serif tracking-tight mb-3">
             Komunikoni me Dyqanin Tonë VIP
@@ -69,25 +69,25 @@ ${customMsg}`;
               href={WHATSAPP_CONFIG.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group p-5 rounded-2xl bg-slate-900/90 border border-amber-500/30 hover:border-amber-400 hover:bg-slate-800 transition-all duration-300 flex items-center justify-between shadow-2xl block"
+              className="group p-5 rounded-2xl bg-slate-900/90 border border-red-500/30 hover:border-red-400 hover:bg-slate-800 transition-all duration-300 flex items-center justify-between shadow-2xl block"
               id="contact-card-instagram"
             >
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-slate-950 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0 shadow-lg">
+                <div className="w-12 h-12 rounded-xl bg-slate-950 border border-red-500/30 flex items-center justify-center text-red-400 shrink-0 shadow-lg">
                   <Instagram className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="text-xs font-bold text-amber-300 uppercase tracking-wider block">Instagram Official</span>
+                  <span className="text-xs font-bold text-red-300 uppercase tracking-wider block">Instagram Official</span>
                   <h3 className="text-base font-bold text-white font-serif">{WHATSAPP_CONFIG.instagramHandle}</h3>
                   <p className="text-xs text-slate-400 font-light">Ndiqni produktet & risitë e reja</p>
                 </div>
               </div>
-              <span className="text-amber-400 font-bold text-lg group-hover:translate-x-1 transition-transform">→</span>
+              <span className="text-red-400 font-bold text-lg group-hover:translate-x-1 transition-transform">→</span>
             </a>
 
             {/* Email Card */}
-            <div className="p-5 rounded-2xl bg-slate-900/90 border border-amber-500/20 flex items-center gap-4 shadow-xl">
-              <div className="w-12 h-12 rounded-xl bg-slate-950 border border-amber-500/20 flex items-center justify-center text-amber-400 shrink-0">
+            <div className="p-5 rounded-2xl bg-slate-900/90 border border-red-500/20 flex items-center gap-4 shadow-xl">
+              <div className="w-12 h-12 rounded-xl bg-slate-950 border border-red-500/20 flex items-center justify-center text-red-400 shrink-0">
                 <Mail className="w-5 h-5" />
               </div>
               <div>
@@ -98,16 +98,16 @@ ${customMsg}`;
             </div>
 
             {/* Location & Hours Card */}
-            <div className="p-5 rounded-2xl bg-slate-900/90 border border-amber-500/20 space-y-3 shadow-xl">
+            <div className="p-5 rounded-2xl bg-slate-900/90 border border-red-500/20 space-y-3 shadow-xl">
               <div className="flex items-center gap-3">
-                <MapPin className="w-5 h-5 text-amber-400 shrink-0" />
+                <MapPin className="w-5 h-5 text-red-400 shrink-0" />
                 <div>
                   <span className="text-xs text-slate-400 block font-light">Shërbimi</span>
                   <span className="text-xs font-bold text-white">{WHATSAPP_CONFIG.address}</span>
                 </div>
               </div>
-              <div className="flex items-center gap-3 pt-2 border-t border-amber-500/10">
-                <Clock className="w-5 h-5 text-amber-400 shrink-0" />
+              <div className="flex items-center gap-3 pt-2 border-t border-red-500/10">
+                <Clock className="w-5 h-5 text-red-400 shrink-0" />
                 <div>
                   <span className="text-xs text-slate-400 block font-light">Koha e Përgjigjes</span>
                   <span className="text-xs font-bold text-white">{WHATSAPP_CONFIG.workingHours}</span>
@@ -118,9 +118,9 @@ ${customMsg}`;
           </div>
 
           {/* Right Column: Direct Quick WhatsApp Form */}
-          <div className="lg:col-span-7 bg-slate-900/90 border border-amber-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl flex flex-col justify-between backdrop-blur-xl">
+          <div className="lg:col-span-7 bg-slate-900/90 border border-red-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl flex flex-col justify-between backdrop-blur-xl">
             <div>
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-amber-500/20">
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-red-500/20">
                 <div>
                   <h3 className="text-xl sm:text-2xl font-bold text-white font-serif">Dërgo Mesazh në WhatsApp</h3>
                   <p className="text-xs text-slate-300 mt-1 font-light">
@@ -134,7 +134,7 @@ ${customMsg}`;
 
               <form onSubmit={handleSendCustomWhatsApp} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold uppercase text-amber-300 tracking-wider mb-1.5">
+                  <label className="block text-xs font-bold uppercase text-red-300 tracking-wider mb-1.5">
                     Emri Juaj
                   </label>
                   <input
@@ -142,12 +142,12 @@ ${customMsg}`;
                     placeholder="Filan Fisteku"
                     value={senderName}
                     onChange={(e) => setSenderName(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-amber-500/30 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-amber-400"
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-red-500/30 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-red-400"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase text-amber-300 tracking-wider mb-1.5">
+                  <label className="block text-xs font-bold uppercase text-red-300 tracking-wider mb-1.5">
                     Mesazhi ose Pyetja për Produktin
                   </label>
                   <textarea
@@ -156,7 +156,7 @@ ${customMsg}`;
                     placeholder="Përshëndetje, dëshiroj pyetje për shishen..."
                     value={customMsg}
                     onChange={(e) => setCustomMsg(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-amber-500/30 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-amber-400 resize-none"
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-red-500/30 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-red-400 resize-none"
                   />
                 </div>
 
@@ -171,7 +171,7 @@ ${customMsg}`;
               </form>
             </div>
 
-            <div className="mt-6 pt-3 border-t border-amber-500/10 text-center">
+            <div className="mt-6 pt-3 border-t border-red-500/10 text-center">
               <p className="text-xs text-slate-400 font-light">
                 Përgjigje e menjëhershme nga operatori ynë.
               </p>
