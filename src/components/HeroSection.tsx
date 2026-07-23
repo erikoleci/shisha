@@ -9,7 +9,7 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onShopClick }) => {
   return (
-    <section id="home" className="relative min-h-[92vh] flex items-center justify-center pt-32 pb-20 bg-slate-950 text-white overflow-hidden">
+    <section id="home" className="relative z-10 min-h-[92vh] flex items-center justify-center pt-32 pb-20 text-white overflow-hidden">
       
       {/* High Definition Ambient Smoke & Video Background */}
       <SmokeBackground />

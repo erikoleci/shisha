@@ -58,7 +58,7 @@ export default function App() {
 
       {/* Fixed Watermark Logo Background */}
       <div
-        className="fixed inset-0 z-0 pointer-events-none bg-center bg-no-repeat opacity-[0.07]"
+        className="fixed inset-0 z-0 pointer-events-none bg-center bg-no-repeat opacity-[0.13]"
         style={{ backgroundImage: `url(${mraLogo})`, backgroundSize: 'min(65vw, 850px)' }}
         aria-hidden="true"
       />

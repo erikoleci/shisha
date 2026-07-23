@@ -40,17 +40,17 @@ export const SmokeBackground: React.FC<SmokeBackgroundProps> = ({ className = ''
     }
 
     const particles: Particle[] = [];
-    const particleCount = 35;
+    const particleCount = 55;
 
     const createParticle = (): Particle => {
       return {
         x: Math.random() * width,
         y: height + Math.random() * 100,
-        size: Math.random() * 120 + 80,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: -(Math.random() * 0.6 + 0.2),
+        size: Math.random() * 160 + 100,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: -(Math.random() * 0.7 + 0.3),
         alpha: 0,
-        maxAlpha: Math.random() * 0.15 + 0.05,
+        maxAlpha: Math.random() * 0.35 + 0.15,
         life: 0,
         maxLife: Math.random() * 400 + 300,
         color: Math.random() > 0.3 ? '180, 30, 40' : '255, 255, 255' // Red & White wisps
@@ -108,25 +108,12 @@ export const SmokeBackground: React.FC<SmokeBackgroundProps> = ({ className = ''
 
   return (
     <div className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}>
-      {/* Video Loop - High Quality Smoke Video Background */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-screen scale-105 filter blur-[1px]"
-        poster="https://images.unsplash.com/photo-1517263904808-5dc91e3e7044?q=80&w=1600&auto=format&fit=crop"
-      >
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-smoke-rising-in-the-dark-41551-large.mp4" type="video/mp4" />
-        <source src="https://cdn.coverr.co/videos/coverr-smoke-rising-slowly-in-the-dark-5526/1080p.mp4" type="video/mp4" />
-      </video>
-
       {/* Canvas Smoke Wisps */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-70 mix-blend-screen" />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-90 mix-blend-screen" />
 
-      {/* Ambient Dark Gold Vignette Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/90" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-500/10 via-transparent to-slate-950/80" />
+      {/* Ambient Dark Red Vignette Overlays (semi-transparent, lets logo watermark show through) */}
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-slate-950/70" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-500/10 via-transparent to-slate-950/60" />
     </div>
   );
 };
