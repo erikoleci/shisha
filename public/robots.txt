@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shisha-mra.vercel.app/sitemap.xml
