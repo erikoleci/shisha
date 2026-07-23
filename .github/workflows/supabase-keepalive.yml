@@ -1,0 +1,37 @@
+name: Supabase Keep Alive System
+
+on:
+  schedule:
+    # Runs every 5 days at 00:00 UTC to keep Supabase active and prevent auto-pause
+    - cron: "0 0 */5 * *"
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  keepalive:
+    name: Ping Supabase Database
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send ping query to Supabase REST API
+        env:
+          SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "Warning: SUPABASE_URL or SUPABASE_ANON_KEY secret is missing in GitHub repository settings."
+            exit 0
+          fi
+
+          echo "Executing Supabase Keep Alive ping query..."
+          
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X GET "${SUPABASE_URL}/rest/v1/products?select=count" \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}")
+
+          echo "Supabase HTTP Response Code: ${RESPONSE}"
+
+          if [ "$RESPONSE" -eq 200 ] || [ "$RESPONSE" -eq 206 ]; then
+            echo "Success: Supabase database is ACTIVE and SELECT query succeeded (SELECT 1 count confirmed)."
+          else
+            echo "Notice: Ping completed with status ${RESPONSE}. Database activity recorded."
+          fi

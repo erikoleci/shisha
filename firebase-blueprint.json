@@ -1,0 +1,33 @@
+{
+  "entities": {
+    "products": {
+      "title": "Products",
+      "description": "Products available in the Shisha Store Albania",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "price": { "type": "number" },
+        "originalPrice": { "type": "number" },
+        "description": { "type": "string" },
+        "image": { "type": "string" },
+        "available": { "type": "boolean" },
+        "featured": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "reviewsCount": { "type": "number" },
+        "specifications": {
+          "type": "object",
+          "properties": {
+            "height": { "type": "string" },
+            "material": { "type": "string" },
+            "hose": { "type": "string" },
+            "origin": { "type": "string" }
+          }
+        },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "category", "price", "description", "image"]
+    }
+  }
+}
