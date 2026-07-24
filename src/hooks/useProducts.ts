@@ -38,6 +38,7 @@ export function useProducts() {
     if (newProd) {
       setProducts(prev => [newProd, ...prev]);
     }
+    fetchProducts();
     return newProd;
   };
 
@@ -46,6 +47,7 @@ export function useProducts() {
     if (success) {
       setProducts(prev => prev.map(p => p.id === id ? { ...p, ...updatedFields } : p));
     }
+    fetchProducts();
     return success;
   };
 
@@ -54,6 +56,7 @@ export function useProducts() {
     if (success) {
       setProducts(prev => prev.filter(p => p.id !== id));
     }
+    fetchProducts();
     return success;
   };
 
