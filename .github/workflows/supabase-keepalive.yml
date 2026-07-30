@@ -2,8 +2,10 @@ name: Supabase Keep Alive System
 
 on:
   schedule:
-    # Runs every 5 days at 00:00 UTC to keep Supabase active and prevent auto-pause
-    - cron: "0 0 */5 * *"
+    # Runs every 2 days at 00:00 UTC - well inside Supabase's 7-day auto-pause
+    # window, so a single missed/delayed GitHub Actions run can't let the
+    # project sit idle long enough to pause.
+    - cron: "0 0 */2 * *"
   workflow_dispatch: # Allows manual trigger from GitHub Actions tab
 
 jobs:
@@ -17,13 +19,13 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: |
           if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
-            echo "Warning: SUPABASE_URL or SUPABASE_ANON_KEY secret is missing in GitHub repository settings."
-            exit 0
+            echo "::error::SUPABASE_URL or SUPABASE_ANON_KEY secret is missing in this repo's Settings > Secrets and variables > Actions. The keepalive ping is NOT running."
+            exit 1
           fi
 
           echo "Executing Supabase Keep Alive ping query..."
-          
-          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
+
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" --retry 3 --retry-delay 5 --max-time 15 \
             -X GET "${SUPABASE_URL}/rest/v1/products?select=count" \
             -H "apikey: ${SUPABASE_ANON_KEY}" \
             -H "Authorization: Bearer ${SUPABASE_ANON_KEY}")
@@ -31,7 +33,8 @@ jobs:
           echo "Supabase HTTP Response Code: ${RESPONSE}"
 
           if [ "$RESPONSE" -eq 200 ] || [ "$RESPONSE" -eq 206 ]; then
-            echo "Success: Supabase database is ACTIVE and SELECT query succeeded (SELECT 1 count confirmed)."
+            echo "Success: Supabase database is ACTIVE and query succeeded."
           else
-            echo "Notice: Ping completed with status ${RESPONSE}. Database activity recorded."
+            echo "::error::Ping failed with HTTP status ${RESPONSE}. The project may already be paused, the URL/key may be wrong, or the 'products' table doesn't exist. Failing this run so GitHub emails you about it."
+            exit 1
           fi
