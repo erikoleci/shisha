@@ -1,8 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Product, FilterOptions } from '../types';
 import { ProductCard } from '../components/ProductCard';
 import { ProductFilters } from '../components/ProductFilters';
-import { Sparkles, PackageX } from 'lucide-react';
 
 interface ProductsPageProps {
   products: Product[];
@@ -10,35 +9,42 @@ interface ProductsPageProps {
   selectedCategory?: string;
 }
 
-export const ProductsPage: React.FC<ProductsPageProps> = ({
-  products,
-  onSelectProduct,
-  selectedCategory
-}) => {
+const DEFAULT_FILTERS: FilterOptions = {
+  category: 'All',
+  searchQuery: '',
+  maxPrice: 500,
+  onlyAvailable: false,
+  sortBy: 'featured',
+};
+
+export const ProductsPage: React.FC<ProductsPageProps> = ({ products, onSelectProduct, selectedCategory }) => {
   const [filters, setFilters] = useState<FilterOptions>({
+    ...DEFAULT_FILTERS,
     category: selectedCategory || 'All',
-    searchQuery: '',
-    maxPrice: 500,
-    onlyAvailable: false,
-    sortBy: 'featured'
   });
 
+  // Follow category picks made in the Categories section
+  useEffect(() => {
+    if (selectedCategory) setFilters((f) => ({ ...f, category: selectedCategory }));
+  }, [selectedCategory]);
+
+  // Only offer categories that actually have products, plus the one currently picked
+  const categories = useMemo(() => {
+    const set = new Set(products.map((p) => p.category));
+    if (filters.category !== 'All') set.add(filters.category);
+    return ['All', ...Array.from(set)];
+  }, [products, filters.category]);
+
   const filteredProducts = useMemo(() => {
+    const query = filters.searchQuery.trim().toLowerCase();
     return products
-      .filter(p => {
-        if (filters.category !== 'All' && p.category !== filters.category) {
-          return false;
+      .filter((p) => {
+        if (filters.category !== 'All' && p.category !== filters.category) return false;
+        if (query) {
+          const hay = `${p.name} ${p.description} ${p.category}`.toLowerCase();
+          if (!hay.includes(query)) return false;
         }
-        if (filters.searchQuery.trim()) {
-          const query = filters.searchQuery.toLowerCase();
-          const nameMatch = p.name.toLowerCase().includes(query);
-          const descMatch = p.description.toLowerCase().includes(query);
-          const catMatch = p.category.toLowerCase().includes(query);
-          if (!nameMatch && !descMatch && !catMatch) return false;
-        }
-        if (filters.onlyAvailable && !p.available) {
-          return false;
-        }
+        if (filters.onlyAvailable && !p.available) return false;
         return true;
       })
       .sort((a, b) => {
@@ -50,71 +56,40 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
   }, [products, filters]);
 
   return (
-    <section id="products" className="py-20 bg-slate-950 text-white relative border-t border-red-500/20">
-      
-      {/* Background ambient glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-red-500/5 blur-[100px] rounded-full pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-red-500/30 shadow-md mb-4 backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5 text-red-400" />
-            <span className="text-xs font-black uppercase tracking-[0.2em] text-red-300">
-              KATALOGU MRA VIP
-            </span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white font-serif tracking-tight mb-4">
-            Koleksioni ynë i Shishave & Aksesorëve
-          </h2>
-          <p className="text-slate-300 text-sm sm:text-base font-light leading-relaxed">
-            Zgjidhni produktin tuaj të preferuar dhe klikoni "Porosit" për të dërguar porosinë automatikisht në WhatsApp.
+    <section id="products" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-ink/70 border-y border-bone/10">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-10 max-w-2xl">
+          <span className="rule mb-6" />
+          <h2 className="display text-3xl sm:text-4xl text-bone">Katalogu</h2>
+          <p className="mt-4 text-slate-400 leading-relaxed">
+            Shtyp “Porosit” te produkti dhe mesazhi me emrin dhe çmimin hapet gati në WhatsApp.
           </p>
         </div>
 
-        {/* Filter Controls Component */}
         <ProductFilters
+          categories={categories}
           filters={filters}
           onFilterChange={setFilters}
           totalResults={filteredProducts.length}
         />
 
-        {/* Product Cards Grid */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onSelectProduct={onSelectProduct}
-              />
+              <ProductCard key={product.id} product={product} onSelectProduct={onSelectProduct} />
             ))}
           </div>
         ) : (
-          <div className="text-center py-16 bg-slate-900/90 rounded-2xl border border-red-500/30 p-8 max-w-lg mx-auto shadow-2xl">
-            <PackageX className="w-12 h-12 text-red-500/60 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-white font-serif mb-2">
-              Nuk u gjet asnjë produkt!
-            </h3>
-            <p className="text-xs text-slate-400 mb-6 font-light leading-relaxed">
-              Nuk u gjetën produkte për filtrat e zgjedhur. Provoni të ndryshoni kategorinë ose fshini kërkimin.
+          <div className="py-16 border-t border-bone/10 max-w-lg">
+            <h3 className="display text-xl text-bone">Asnjë produkt këtu</h3>
+            <p className="mt-3 text-slate-400 leading-relaxed">
+              Nuk ka produkte për këtë zgjedhje. Pastro filtrat ose na shkruaj në WhatsApp, mund ta sjellim me porosi.
             </p>
-            <button
-              onClick={() => setFilters({
-                category: 'All',
-                searchQuery: '',
-                maxPrice: 500,
-                onlyAvailable: false,
-                sortBy: 'featured'
-              })}
-              className="px-6 py-3 rounded-full bg-gradient-to-r from-red-400 to-red-600 hover:from-red-300 hover:to-red-500 text-slate-950 font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-red-500/20 cursor-pointer"
-            >
-              Rivendos Filtrat
+            <button onClick={() => setFilters(DEFAULT_FILTERS)} className="btn btn-ghost mt-6">
+              Pastro filtrat
             </button>
           </div>
         )}
-
       </div>
     </section>
   );

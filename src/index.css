@@ -1,1 +1,130 @@
 @import "tailwindcss";
+
+/*
+  MRA Shisha — palette taken from the logo:
+  wine-black ground, oxblood damask, M²RA crimson, skull bone-white.
+  The slate and red scales are re-tinted so every existing component
+  (admin, modals) inherits the brand without being rewritten.
+*/
+@theme {
+  --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cinzel", ui-serif, Georgia, serif;
+  --font-display: "Cinzel", ui-serif, Georgia, serif;
+
+  --color-ink: #140a0c;
+  --color-wine: #2a1216;
+  --color-crimson: #b0243a;
+  --color-bone: #ece4d8;
+  --color-ash: #9c8b84;
+
+  --color-slate-50: #f5f0e9;
+  --color-slate-100: #ece4d8;
+  --color-slate-200: #ddd3c8;
+  --color-slate-300: #c2b5ac;
+  --color-slate-400: #9c8b84;
+  --color-slate-500: #7a6563;
+  --color-slate-600: #57393e;
+  --color-slate-700: #3b2328;
+  --color-slate-800: #2a1519;
+  --color-slate-900: #1f0f12;
+  --color-slate-950: #140a0c;
+
+  --color-red-50: #fbeaec;
+  --color-red-100: #f4ccd2;
+  --color-red-200: #e9a3ae;
+  --color-red-300: #da7686;
+  --color-red-400: #c84a60;
+  --color-red-500: #b0243a;
+  --color-red-600: #921b30;
+  --color-red-700: #741527;
+  --color-red-800: #56101d;
+  --color-red-900: #3d0b15;
+  --color-red-950: #26060d;
+}
+
+html {
+  background: var(--color-ink);
+  color: var(--color-bone);
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--color-ink);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-bone);
+  outline-offset: 3px;
+}
+
+/* Inscription-style headings */
+.display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+
+/* Buttons: squared, engraved feel */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.6rem;
+  border-radius: 2px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.btn-primary {
+  background: var(--color-bone);
+  color: var(--color-ink);
+  border: 1px solid var(--color-bone);
+}
+.btn-primary:hover {
+  background: #fff;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--color-bone);
+  border: 1px solid rgb(236 228 216 / 0.35);
+}
+.btn-ghost:hover {
+  border-color: var(--color-bone);
+  background: rgb(236 228 216 / 0.06);
+}
+
+/* Section heading rule */
+.rule {
+  display: block;
+  width: 3rem;
+  height: 2px;
+  background: var(--color-crimson);
+}
+
+/* Hero entrance: the emblem rises out of the damask, once */
+@keyframes emblem-in {
+  from { opacity: 0; transform: scale(0.94); filter: blur(6px); }
+  to   { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.emblem-in { animation: emblem-in 1.4s cubic-bezier(.2,.7,.2,1) both; }
+.rise-in   { animation: rise-in 0.9s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .emblem-in, .rise-in { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+.scrollbar-none { scrollbar-width: none; }
+.scrollbar-none::-webkit-scrollbar { display: none; }

@@ -1,124 +1,104 @@
 import React from 'react';
-import { CATEGORIES } from '../data/products';
 import { FilterOptions } from '../types';
-import { Search, RotateCcw, CheckCircle2 } from 'lucide-react';
+import { Search, X } from 'lucide-react';
+import { categoryLabel } from '../config/categories';
 
 interface ProductFiltersProps {
+  categories: string[];
   filters: FilterOptions;
   onFilterChange: (newFilters: FilterOptions) => void;
   totalResults: number;
 }
 
+const fieldClass =
+  'w-full bg-ink border border-bone/15 text-bone placeholder-slate-500 text-[0.95rem] px-3.5 py-2.5 rounded-[2px] focus:outline-none focus:border-bone/50';
+
 export const ProductFilters: React.FC<ProductFiltersProps> = ({
+  categories,
   filters,
   onFilterChange,
-  totalResults
+  totalResults,
 }) => {
-
-  const handleCategoryClick = (cat: string) => {
-    onFilterChange({ ...filters, category: cat });
-  };
-
-  const handleReset = () => {
-    onFilterChange({
-      category: 'All',
-      searchQuery: '',
-      maxPrice: 500,
-      onlyAvailable: false,
-      sortBy: 'featured'
-    });
-  };
-
   return (
-    <div className="w-full bg-slate-900/90 backdrop-blur-xl border border-red-500/30 rounded-2xl p-5 shadow-2xl mb-10 text-white">
-      
-      {/* Category Pills Header */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-5 border-b border-red-500/20 scrollbar-none">
-        {CATEGORIES.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => handleCategoryClick(cat)}
-            id={`filter-category-${cat.toLowerCase().replace(/\s+/g, '-')}`}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 whitespace-nowrap cursor-pointer uppercase tracking-wider ${
-              filters.category === cat
-                ? 'bg-gradient-to-r from-red-400 to-red-600 text-slate-950 font-black shadow-lg shadow-red-500/20'
-                : 'bg-slate-950 text-slate-300 hover:bg-slate-800 hover:text-red-300 border border-red-500/20'
-            }`}
-          >
-            {cat === 'All' ? 'Të Gjitha' : cat}
-          </button>
-        ))}
+    <div className="mb-10">
+      {/* Category tabs */}
+      <div
+        className="flex gap-6 overflow-x-auto scrollbar-none border-b border-bone/10 -mx-4 px-4 sm:mx-0 sm:px-0"
+        role="tablist"
+        aria-label="Kategoritë"
+      >
+        {categories.map((cat) => {
+          const active = filters.category === cat;
+          return (
+            <button
+              key={cat}
+              role="tab"
+              aria-selected={active}
+              onClick={() => onFilterChange({ ...filters, category: cat })}
+              id={`filter-category-${cat.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+              className={`relative whitespace-nowrap py-3 text-[0.95rem] transition-colors ${
+                active ? 'text-bone' : 'text-slate-400 hover:text-bone'
+              }`}
+            >
+              {categoryLabel(cat)}
+              {active && <span className="absolute left-0 right-0 -bottom-px h-0.5 bg-crimson" />}
+            </button>
+          );
+        })}
       </div>
 
-      {/* Controls Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
-        
-        {/* Search Input */}
-        <div className="md:col-span-5 relative">
-          <Search className="w-4 h-4 text-red-400/80 absolute left-3.5 top-1/2 -translate-y-1/2" />
+      {/* Search, sort, availability */}
+      <div className="mt-5 grid grid-cols-1 md:grid-cols-[1fr_14rem_auto] gap-3 items-center">
+        <label className="relative block">
+          <span className="sr-only">Kërko produkt</span>
+          <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" aria-hidden="true" />
           <input
-            type="text"
-            placeholder="Kërko produkt me emër ose përshkrim..."
+            type="search"
+            placeholder="Kërko produkt"
             value={filters.searchQuery}
             onChange={(e) => onFilterChange({ ...filters, searchQuery: e.target.value })}
-            className="w-full pl-10 pr-12 py-2.5 rounded-xl bg-slate-950 border border-red-500/30 text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:border-red-400 transition-colors"
+            className={`${fieldClass} !pl-10 !pr-10`}
           />
           {filters.searchQuery && (
             <button
               onClick={() => onFilterChange({ ...filters, searchQuery: '' })}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-red-400 hover:text-red-300 uppercase"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-bone"
+              aria-label="Pastro kërkimin"
             >
-              Fshi
+              <X className="w-4 h-4" />
             </button>
           )}
-        </div>
+        </label>
 
-        {/* Sort By Dropdown */}
-        <div className="md:col-span-3">
+        <label className="block">
+          <span className="sr-only">Rendit sipas</span>
           <select
             value={filters.sortBy}
-            onChange={(e) => onFilterChange({ ...filters, sortBy: e.target.value as any })}
-            className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-red-500/30 text-slate-200 text-xs sm:text-sm focus:outline-none focus:border-red-400 cursor-pointer"
+            onChange={(e) => onFilterChange({ ...filters, sortBy: e.target.value as FilterOptions['sortBy'] })}
+            className={`${fieldClass} cursor-pointer`}
           >
-            <option value="featured">I Rekomanduar</option>
-            <option value="price-asc">Çmimi: Ulët ku Lartë</option>
-            <option value="price-desc">Çmimi: Lartë ku Ulët</option>
-            <option value="name">Sipas Emrit (A-Z)</option>
+            <option value="featured">Të rekomanduara</option>
+            <option value="price-asc">Çmimi: nga më i ulëti</option>
+            <option value="price-desc">Çmimi: nga më i larti</option>
+            <option value="name">Emri (A–Z)</option>
           </select>
-        </div>
+        </label>
 
-        {/* Availability Toggle */}
-        <div className="md:col-span-2">
-          <button
-            onClick={() => onFilterChange({ ...filters, onlyAvailable: !filters.onlyAvailable })}
-            className={`w-full px-3.5 py-2.5 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-              filters.onlyAvailable
-                ? 'bg-emerald-950/80 border-emerald-500/50 text-emerald-300'
-                : 'bg-slate-950 border-red-500/20 text-slate-300 hover:bg-slate-800 hover:text-red-300'
-            }`}
-          >
-            <CheckCircle2 className={`w-3.5 h-3.5 ${filters.onlyAvailable ? 'text-emerald-400' : 'text-slate-500'}`} />
-            <span>Në Gjendje</span>
-          </button>
-        </div>
-
-        {/* Reset Button & Count */}
-        <div className="md:col-span-2 flex items-center justify-between md:justify-end gap-3">
-          <span className="text-xs text-red-300/80 font-bold uppercase tracking-wider">
+        <div className="flex items-center justify-between md:justify-end gap-5">
+          <label className="flex items-center gap-2 text-[0.95rem] text-slate-300 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={filters.onlyAvailable}
+              onChange={() => onFilterChange({ ...filters, onlyAvailable: !filters.onlyAvailable })}
+              className="w-4 h-4 accent-[#b0243a]"
+            />
+            Vetëm në gjendje
+          </label>
+          <span className="text-sm text-slate-500 whitespace-nowrap" aria-live="polite">
             {totalResults} {totalResults === 1 ? 'produkt' : 'produkte'}
           </span>
-          
-          <button
-            onClick={handleReset}
-            className="p-2.5 rounded-xl bg-slate-950 border border-red-500/30 text-red-400 hover:text-red-300 hover:bg-slate-800 transition-colors cursor-pointer"
-            title="Rivendos filtrat"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-          </button>
         </div>
-
       </div>
-
     </div>
   );
 };

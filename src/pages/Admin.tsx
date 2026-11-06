@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Product, CATEGORIES } from '../types';
 import { supabase } from '../config/supabase';
+import { categoryLabel } from '../config/categories';
 import { 
   Database, 
   Plus, 
@@ -71,7 +72,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({
 
   // Form State (Price starts completely empty '')
   const [name, setName] = useState('');
-  const [category, setCategory] = useState<string>('Shisha / Hookah');
+  const [category, setCategory] = useState<string>('Premium Hookahs');
   const [price, setPrice] = useState<string>('');
   const [imageUrl, setImageUrl] = useState('');
   const [imagePreview, setImagePreview] = useState('');
@@ -513,13 +514,13 @@ export const AdminPage: React.FC<AdminPageProps> = ({
                     className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-red-500/30 text-white text-xs sm:text-sm focus:outline-none focus:border-red-400 cursor-pointer"
                   >
                     {CATEGORIES.filter(c => c !== 'All').map(cat => (
-                      <option key={cat} value={cat}>{cat}</option>
+                      <option key={cat} value={cat}>{categoryLabel(cat)}</option>
                     ))}
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase text-red-300 mb-1 tracking-wider">Çmimi (€) *</label>
+                  <label className="block text-xs font-bold uppercase text-red-300 mb-1 tracking-wider">Çmimi (Lekë) *</label>
                   <input
                     type="number"
                     required

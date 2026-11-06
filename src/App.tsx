@@ -54,14 +54,22 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-slate-950 text-white font-sans selection:bg-red-500 selection:text-slate-950 antialiased overflow-x-hidden">
+    <div className="relative isolate min-h-screen bg-ink text-bone font-sans selection:bg-crimson selection:text-bone overflow-x-hidden">
 
-      {/* Fixed Watermark Logo Background (negative z-index: always behind, never blocks clicks) */}
-      <div
-        className="fixed inset-0 -z-10 pointer-events-none bg-center bg-no-repeat opacity-[0.18]"
-        style={{ backgroundImage: `url(${mraLogo})`, backgroundSize: 'min(65vw, 850px)' }}
-        aria-hidden="true"
-      />
+      {/* Logo as a fixed, darkened full-page backdrop (behind everything, never blocks clicks) */}
+      <div aria-hidden="true" className="fixed inset-0 -z-10 pointer-events-none">
+        <div
+          className="absolute inset-0 bg-center bg-cover opacity-[0.22] saturate-[0.8]"
+          style={{ backgroundImage: `url(${mraLogo})` }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(ellipse at 50% 35%, rgb(20 10 12 / 0.35) 0%, rgb(20 10 12 / 0.82) 60%, #140a0c 100%)',
+          }}
+        />
+      </div>
 
       {/* Fixed Navbar */}
       <Navbar
