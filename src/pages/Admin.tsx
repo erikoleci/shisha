@@ -92,7 +92,16 @@ export const AdminPage: React.FC<AdminPageProps> = ({
     });
     setLoginLoading(false);
     if (error) {
-      setLoginError('Email-i ose fjalëkalimi është i pasaktë. Provoni përsëri.');
+      const msg = (error.message || '').toLowerCase();
+      if (msg.includes('email not confirmed')) {
+        setLoginError('Email-i nuk është konfirmuar. Te Supabase → Authentication → Users krijoje përdoruesin me "Auto Confirm User".');
+      } else if (msg.includes('invalid login credentials')) {
+        setLoginError('Email-i ose fjalëkalimi është i pasaktë. Provoni përsëri.');
+      } else if (msg.includes('email logins are disabled') || msg.includes('provider is disabled')) {
+        setLoginError('Hyrja me Email është e çaktivizuar te Supabase → Authentication → Sign In / Providers.');
+      } else {
+        setLoginError('Gabim nga Supabase: ' + error.message);
+      }
     } else {
       setLoginError(null);
       setPasswordInput('');
