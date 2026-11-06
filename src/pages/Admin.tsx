@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Product, CATEGORIES } from '../types';
+import { supabase } from '../config/supabase';
 import { 
   Database, 
   Plus, 
@@ -33,13 +34,32 @@ export const AdminPage: React.FC<AdminPageProps> = ({
   onUploadImage,
   onRefresh
 }) => {
-  // Password Protection State
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return sessionStorage.getItem('admin_authenticated') === 'true';
-  });
+  // Supabase Auth State (the admin user is created in Supabase → Authentication → Users)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [authChecking, setAuthChecking] = useState<boolean>(true);
+  const [adminEmail, setAdminEmail] = useState<string>('');
+  const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
-  const [loginError, setLoginError] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [loginLoading, setLoginLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (!supabase) {
+      setAuthChecking(false);
+      return;
+    }
+    supabase.auth.getSession().then(({ data }) => {
+      setIsAuthenticated(!!data.session);
+      setAdminEmail(data.session?.user.email || '');
+      setAuthChecking(false);
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session);
+      setAdminEmail(session?.user.email || '');
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
 
   const [activeTab, setActiveTab] = useState<'manage' | 'add'>('manage');
   const [loading, setLoading] = useState(false);
@@ -59,42 +79,59 @@ export const AdminPage: React.FC<AdminPageProps> = ({
   const [badge, setBadge] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const storedPassword = localStorage.getItem('admin_password') || 'admin';
-    if (passwordInput.trim().toLowerCase() === storedPassword.toLowerCase()) {
-      setIsAuthenticated(true);
-      sessionStorage.setItem('admin_authenticated', 'true');
-      setLoginError(false);
-      setPasswordInput('');
+    if (!supabase) {
+      setLoginError('Supabase nuk është lidhur. Kontrollo VITE_SUPABASE_URL dhe VITE_SUPABASE_ANON_KEY.');
+      return;
+    }
+    setLoginLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: emailInput.trim(),
+      password: passwordInput,
+    });
+    setLoginLoading(false);
+    if (error) {
+      setLoginError('Email-i ose fjalëkalimi është i pasaktë. Provoni përsëri.');
     } else {
-      setLoginError(true);
+      setLoginError(null);
+      setPasswordInput('');
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    if (supabase) await supabase.auth.signOut();
     setIsAuthenticated(false);
-    sessionStorage.removeItem('admin_authenticated');
   };
 
-  const handleChangePassword = (e: React.FormEvent) => {
+  const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
-    const storedPassword = localStorage.getItem('admin_password') || 'admin';
+    if (!supabase) return;
 
-    if (oldPasswordInput.trim().toLowerCase() !== storedPassword.toLowerCase()) {
-      setChangePasswordMsg({ type: 'error', text: 'Fjalëkalimi aktual është gabim.' });
+    if (newPasswordInput.length < 8) {
+      setChangePasswordMsg({ type: 'error', text: 'Fjalëkalimi i ri duhet të ketë të paktën 8 karaktere.' });
       return;
     }
-    if (newPasswordInput.trim().length < 4) {
-      setChangePasswordMsg({ type: 'error', text: 'Fjalëkalimi i ri duhet të ketë të paktën 4 shkronja/shifra.' });
-      return;
-    }
-    if (newPasswordInput.trim() !== confirmPasswordInput.trim()) {
+    if (newPasswordInput !== confirmPasswordInput) {
       setChangePasswordMsg({ type: 'error', text: 'Fjalëkalimet e reja nuk përputhen.' });
       return;
     }
 
-    localStorage.setItem('admin_password', newPasswordInput.trim());
+    // Confirm the current password before changing it
+    const { error: verifyError } = await supabase.auth.signInWithPassword({
+      email: adminEmail,
+      password: oldPasswordInput,
+    });
+    if (verifyError) {
+      setChangePasswordMsg({ type: 'error', text: 'Fjalëkalimi aktual është gabim.' });
+      return;
+    }
+
+    const { error } = await supabase.auth.updateUser({ password: newPasswordInput });
+    if (error) {
+      setChangePasswordMsg({ type: 'error', text: 'Gabim: ' + error.message });
+      return;
+    }
     setChangePasswordMsg({ type: 'success', text: 'Fjalëkalimi u ndryshua me sukses!' });
     setOldPasswordInput('');
     setNewPasswordInput('');
@@ -194,7 +231,15 @@ export const AdminPage: React.FC<AdminPageProps> = ({
     }
   };
 
-  // If NOT authenticated, show password screen
+  if (authChecking) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center bg-slate-950 text-slate-300 text-sm">
+        <RefreshCw className="w-5 h-5 animate-spin mr-2" /> Duke kontrolluar hyrjen...
+      </div>
+    );
+  }
+
+  // If NOT authenticated, show login screen
   if (!isAuthenticated) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center px-4 py-16 bg-slate-950">
@@ -207,10 +252,27 @@ export const AdminPage: React.FC<AdminPageProps> = ({
             Paneli Admin VIP
           </h2>
           <p className="text-xs text-slate-300 mb-6 font-light">
-            Shkruani fjalëkalimin për të hapur panelin e menaxhimit të dyqanit
+            Shkruani email-in dhe fjalëkalimin për të hapur panelin e menaxhimit të dyqanit
           </p>
 
           <form onSubmit={handleLogin} className="space-y-4 text-left">
+            <div>
+              <label className="block text-xs font-bold uppercase text-red-300 mb-1.5 tracking-wider">
+                Email
+              </label>
+              <input
+                type="email"
+                required
+                autoComplete="username"
+                placeholder="admin@email.com"
+                value={emailInput}
+                onChange={(e) => {
+                  setEmailInput(e.target.value);
+                  setLoginError(null);
+                }}
+                className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-red-500/30 focus:border-red-400 text-white text-sm focus:outline-none transition-colors"
+              />
+            </div>
             <div>
               <label className="block text-xs font-bold uppercase text-red-300 mb-1.5 tracking-wider">
                 Fjalëkalimi
@@ -219,11 +281,12 @@ export const AdminPage: React.FC<AdminPageProps> = ({
                 <input
                   type={showPassword ? "text" : "password"}
                   required
+                  autoComplete="current-password"
                   placeholder="Shkruaj fjalëkalimin..."
                   value={passwordInput}
                   onChange={(e) => {
                     setPasswordInput(e.target.value);
-                    setLoginError(false);
+                    setLoginError(null);
                   }}
                   className={`w-full px-4 py-3 rounded-xl bg-slate-950 border text-white text-sm focus:outline-none pr-10 transition-colors ${
                     loginError ? 'border-rose-500 focus:border-rose-500 bg-rose-950/20' : 'border-red-500/30 focus:border-red-400'
@@ -240,13 +303,14 @@ export const AdminPage: React.FC<AdminPageProps> = ({
               </div>
               {loginError && (
                 <p className="text-xs text-rose-400 font-bold mt-1.5 flex items-center gap-1">
-                  <AlertCircle className="w-3.5 h-3.5 shrink-0" /> Fjalëkalimi është i pasaktë. Provoni përsëri.
+                  <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {loginError}
                 </p>
               )}
             </div>
 
             <button
               type="submit"
+              disabled={loginLoading}
               className="w-full py-3.5 rounded-full bg-gradient-to-r from-red-400 to-red-600 hover:from-red-300 hover:to-red-500 text-slate-950 font-black text-xs uppercase tracking-widest shadow-xl shadow-red-500/20 transition-all cursor-pointer flex items-center justify-center gap-2"
             >
               <Lock className="w-4 h-4" />

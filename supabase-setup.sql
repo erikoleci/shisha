@@ -1,8 +1,12 @@
 -- =======================================================
 -- SUPABASE DATABASE SCHEMA FOR SHISHA STORE ALBANIA
+-- Run this whole file once in Supabase → SQL Editor → Run
+-- Everyone can VIEW products and images.
+-- Only a logged-in admin (Authentication → Users) can add,
+-- edit, delete products or upload/delete images.
 -- =======================================================
 
--- 1. CREATE PRODUCTS TABLE
+-- 1. PRODUCTS TABLE
 CREATE TABLE IF NOT EXISTS public.products (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
@@ -11,41 +15,67 @@ CREATE TABLE IF NOT EXISTS public.products (
   price NUMERIC NOT NULL DEFAULT 0,
   image_url TEXT,
   available BOOLEAN DEFAULT true,
+  badge TEXT DEFAULT '',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- 2. ENABLE ROW LEVEL SECURITY (RLS)
+-- 2. ROW LEVEL SECURITY
 ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
 
--- Public Policy: Anyone can read products
-CREATE POLICY "Allow public read access on products"
+DROP POLICY IF EXISTS "Public can read products" ON public.products;
+DROP POLICY IF EXISTS "Admin can insert products" ON public.products;
+DROP POLICY IF EXISTS "Admin can update products" ON public.products;
+DROP POLICY IF EXISTS "Admin can delete products" ON public.products;
+
+-- Anyone (visitors) can read products
+CREATE POLICY "Public can read products"
 ON public.products FOR SELECT
+TO anon, authenticated
 USING (true);
 
--- Admin Policy: Allow insert, update, delete on products
-CREATE POLICY "Allow admin write access on products"
+-- Only logged-in admin can write
+CREATE POLICY "Admin can insert products"
 ON public.products FOR INSERT
+TO authenticated
 WITH CHECK (true);
 
-CREATE POLICY "Allow admin update access on products"
+CREATE POLICY "Admin can update products"
 ON public.products FOR UPDATE
-USING (true);
+TO authenticated
+USING (true)
+WITH CHECK (true);
 
-CREATE POLICY "Allow admin delete access on products"
+CREATE POLICY "Admin can delete products"
 ON public.products FOR DELETE
+TO authenticated
 USING (true);
 
--- 3. CREATE STORAGE BUCKET FOR PRODUCT IMAGES
+-- 3. STORAGE BUCKET FOR PRODUCT IMAGES
 INSERT INTO storage.buckets (id, name, public)
 VALUES ('product-images', 'product-images', true)
 ON CONFLICT (id) DO NOTHING;
 
--- Public read policy for storage
-CREATE POLICY "Public Read Access on product-images bucket"
+DROP POLICY IF EXISTS "Public can view product images" ON storage.objects;
+DROP POLICY IF EXISTS "Admin can upload product images" ON storage.objects;
+DROP POLICY IF EXISTS "Admin can update product images" ON storage.objects;
+DROP POLICY IF EXISTS "Admin can delete product images" ON storage.objects;
+
+CREATE POLICY "Public can view product images"
 ON storage.objects FOR SELECT
+TO anon, authenticated
 USING (bucket_id = 'product-images');
 
--- Public upload policy for storage
-CREATE POLICY "Public Upload Access on product-images bucket"
+CREATE POLICY "Admin can upload product images"
 ON storage.objects FOR INSERT
+TO authenticated
 WITH CHECK (bucket_id = 'product-images');
+
+CREATE POLICY "Admin can update product images"
+ON storage.objects FOR UPDATE
+TO authenticated
+USING (bucket_id = 'product-images');
+
+CREATE POLICY "Admin can delete product images"
+ON storage.objects FOR DELETE
+TO authenticated
+USING (bucket_id = 'product-images');
