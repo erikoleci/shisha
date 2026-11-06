@@ -5,7 +5,7 @@ export const WHATSAPP_CONFIG = {
   baseWaUrl: 'https://wa.me/355674933622',
   instagramUrl: 'https://www.instagram.com/mra_shisha?igsh=MTk3eWRqOG52Mzc5Ng==',
   instagramHandle: '@mra_shisha',
-  email: 'contact@mrashisha.al',
+  email: 'premiumalbhookah@gmail.com',
   address: 'Tiranë, Shqipëri (Dërgesa në të gjithë Shqipërinë)',
   workingHours: 'Porosi Online 24/7 në WhatsApp'
 };
